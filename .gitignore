@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+*.pkl
+models/
+venv/
+.venv/
+
+# Node
+node_modules/
+dist/
+.DS_Store
+
+# Misc
+*.log
+.idea/
+.vscode/
