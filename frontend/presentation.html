@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAC HealthPrice — Platform Architecture & Workflow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <style>
+        :root {
+            --dac-navy: #1a1a2e;
+            --dac-gold: #f5c563;
+            --dac-light: #f5f5f5;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--dac-navy);
+            font-weight: 700;
+        }
+
+        .reveal {
+            background: linear-gradient(135deg, var(--dac-light) 0%, #ffffff 100%);
+        }
+
+        .reveal pre {
+            background: var(--dac-navy);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .reveal code {
+            padding: 0.2em 0.4em;
+            background: #f0f0f0;
+            border-radius: 3px;
+            color: var(--dac-navy);
+        }
+
+        .slide-title {
+            color: var(--dac-gold);
+            border-bottom: 3px solid var(--dac-gold);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-box {
+            background: var(--dac-navy);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tech-card {
+            background: #f0f0f0;
+            border-left: 4px solid var(--dac-gold);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        table {
+            font-size: 0.8em !important;
+            margin: 1rem auto !important;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: var(--dac-navy) !important;
+            color: white !important;
+            padding: 0.5rem !important;
+        }
+
+        table td {
+            padding: 0.5rem !important;
+            border: 1px solid #ddd !important;
+        }
+
+        .step-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 2rem 0;
+            font-size: 0.9em;
+        }
+
+        .step-box {
+            background: var(--dac-gold);
+            color: var(--dac-navy);
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            color: var(--dac-navy);
+            margin: 0 1rem;
+        }
+
+        .list-compact {
+            text-align: left;
+            font-size: 0.9em;
+            line-height: 1.8;
+        }
+
+        .list-compact li {
+            margin: 0.5rem 0;
+        }
+
+        .cover-slide h1 {
+            font-size: 3.5em;
+            color: var(--dac-navy);
+            margin-bottom: 1rem;
+        }
+
+        .cover-slide h2 {
+            color: var(--dac-gold);
+            font-size: 1.8em;
+            margin-bottom: 2rem;
+        }
+
+        .cover-slide p {
+            font-size: 1.3em;
+            color: var(--dac-navy);
+        }
+
+        .full-width {
+            width: 100%;
+            max-width: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1: Cover -->
+            <section class="cover-slide">
+                <h1>DAC HealthPrice</h1>
+                <h2>Platform Architecture & Workflow</h2>
+                <p>Cambodia 🇰🇭 | Vietnam 🇻🇳</p>
+                <p style="margin-top: 2rem; font-size: 0.9em; color: #666;">Interactive insurance pricing engine powered by actuarial GLM</p>
+            </section>
+
+            <!-- Slide 2: Platform Overview -->
+            <section>
+                <h2 class="slide-title">Platform Overview</h2>
+                <div class="feature-box">
+                    <strong>What We Do:</strong> Real-time health insurance premium quotes using transparent, actuarially-grounded pricing
+                </div>
+                <div class="feature-box">
+                    <strong>Markets:</strong> Cambodia (6 regions) + Vietnam (6 regions)
+                </div>
+                <div class="feature-box">
+                    <strong>Coverage Types:</strong> IPD Hospital Reimbursement (core) + OPD, Dental, Maternity (riders)
+                </div>
+                <div class="feature-box">
+                    <strong>Tiers:</strong> Bronze ($15K limit) → Silver ($40K) → Gold ($80K) → Platinum ($150K)
+                </div>
+                <div class="feature-box">
+                    <strong>Key Innovation:</strong> Hybrid pricing — backend GLM + browser-based fallback for resilience
+                </div>
+            </section>
+
+            <!-- Slide 3: Tech Stack -->
+            <section>
+                <h2 class="slide-title">Technology Stack</h2>
+                <div class="tech-stack">
+                    <div class="tech-card">
+                        <strong>Frontend</strong>
+                        <p>React 19 + Vite SPA</p>
+                        <p>No routing library (state-based)</p>
+                        <p>Custom inline styles</p>
+                    </div>
+                    <div class="tech-card">
+                        <strong>Backend</strong>
+                        <p>FastAPI v2.1.0</p>
+                        <p>asyncpg (async PostgreSQL)</p>
+                        <p>Poisson-Gamma GLM</p>
+                    </div>
+                    <div class="tech-card">
+                        <strong>Database</strong>
+                        <p>Supabase PostgreSQL</p>
+                        <p>4 core tables</p>
+                        <p>Audit trail logging</p>
+                    </div>
+                    <div class="tech-card">
+                        <strong>Deployment</strong>
+                        <p>Render (backend)</p>
+                        <p>Cloudflare Worker (proxy)</p>
+                        <p>GitHub (version control)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: User Journey (Wizard) -->
+            <section>
+                <h2 class="slide-title">User Journey: 4-Step Pricing Wizard</h2>
+                <div class="list-compact">
+                    <h4 style="color: var(--dac-gold); margin-top: 1.5rem;">Step 1: Profile</h4>
+                    <ul>
+                        <li>Age, Gender, Region, Family Size</li>
+                    </ul>
+
+                    <h4 style="color: var(--dac-gold); margin-top: 1.5rem;">Step 2: Health</h4>
+                    <ul>
+                        <li>Smoking Status, Occupation</li>
+                        <li>Pre-existing Conditions (checkboxes)</li>
+                    </ul>
+
+                    <h4 style="color: var(--dac-gold); margin-top: 1.5rem;">Step 3: Plan</h4>
+                    <ul>
+                        <li>Select IPD Tier (Bronze/Silver/Gold/Platinum)</li>
+                        <li>Toggle optional riders (OPD, Dental, Maternity)</li>
+                        <li><strong>"Get my quote"</strong> → API call</li>
+                    </ul>
+
+                    <h4 style="color: var(--dac-gold); margin-top: 1.5rem;">Step 4: Quote</h4>
+                    <ul>
+                        <li>Display premium range (±7% band)</li>
+                        <li>Show tier benefits breakdown</li>
+                        <li>Email capture gate</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 5: Session + Auth Flow -->
+            <section>
+                <h2 class="slide-title">Session & Authentication Flow</h2>
+                <div class="step-diagram">
+                    <div class="step-box">1. User<br>clicks quote</div>
+                    <div class="arrow">→</div>
+                    <div class="step-box">2. POST<br>/session<br>(email)</div>
+                    <div class="arrow">→</div>
+                    <div class="step-box">3. Returns<br>token</div>
+                </div>
+                <div class="step-diagram">
+                    <div class="step-box">4. POST<br>/price<br>(features +<br>token)</div>
+                    <div class="arrow">→</div>
+                    <div class="step-box">5. Backend<br>validates<br>token</div>
+                    <div class="arrow">→</div>
+                    <div class="step-box">6. Returns<br>premium</div>
+                </div>
+                <div style="background: #f0f0f0; padding: 1rem; margin-top: 2rem; border-radius: 8px; text-align: left;">
+                    <p><strong>Rate Limiting:</strong> 15 quotes/day per browser (consumer) or per partner API key</p>
+                    <p><strong>Anti-scraping:</strong> Sweep detection flags systematic parameter exploration</p>
+                    <p><strong>Fallback:</strong> 45s timeout → browser-based GLM pricing</p>
+                </div>
+            </section>
+
+            <!-- Slide 6: GLM Pricing Model -->
+            <section>
+                <h2 class="slide-title">Poisson-Gamma GLM Model</h2>
+                <div style="text-align: left; margin-bottom: 1.5rem;">
+                    <p><strong>Core Formula:</strong></p>
+                    <p style="margin-left: 1rem; font-family: monospace;">Premium = BaseFreq × BaseSeverity × ∏(Age × Smoking × Exercise × Occupation × Region × PreExist)</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Coverage Type</th>
+                            <th>Base Frequency</th>
+                            <th>Base Severity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IPD (Hospital)</td>
+                            <td>Core</td>
+                            <td>0.12 claims/year</td>
+                            <td>$2,500</td>
+                        </tr>
+                        <tr>
+                            <td>OPD (Outpatient)</td>
+                            <td>Rider</td>
+                            <td>2.5 visits/year</td>
+                            <td>$60</td>
+                        </tr>
+                        <tr>
+                            <td>Dental</td>
+                            <td>Rider</td>
+                            <td>0.80 claims/year</td>
+                            <td>$120</td>
+                        </tr>
+                        <tr>
+                            <td>Maternity</td>
+                            <td>Rider</td>
+                            <td>0.15 claims/year</td>
+                            <td>$3,500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Slide 7: Risk Multipliers -->
+            <section>
+                <h2 class="slide-title">Actuarial Risk Multipliers</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                    <div>
+                        <h4 style="color: var(--dac-gold);">Age Brackets</h4>
+                        <table style="font-size: 0.75em !important;">
+                            <tr><td>18–24</td><td>0.85×</td></tr>
+                            <tr><td>25–34</td><td>1.00× (baseline)</td></tr>
+                            <tr><td>35–44</td><td>1.12×</td></tr>
+                            <tr><td>45–54</td><td>1.28×</td></tr>
+                            <tr><td>55–64</td><td>1.48×</td></tr>
+                            <tr><td>65+</td><td>1.72×</td></tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--dac-gold);">Smoking & Lifestyle</h4>
+                        <table style="font-size: 0.75em !important;">
+                            <tr><td>Never smoker</td><td>1.00×</td></tr>
+                            <tr><td>Former smoker</td><td>1.15×</td></tr>
+                            <tr><td>Current smoker</td><td>1.40×</td></tr>
+                            <tr><td>Sedentary</td><td>1.20×</td></tr>
+                            <tr><td>Active</td><td>0.80×</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div style="background: var(--dac-navy); color: white; padding: 1rem; margin-top: 1.5rem; border-radius: 8px;">
+                    <p><strong>Every multiplier is <u>transparent & auditable</u> — no black-box ML models at pricing time</strong></p>
+                </div>
+            </section>
+
+            <!-- Slide 8: Underwriting Engine -->
+            <section>
+                <h2 class="slide-title">Underwriting Engine & Tiering</h2>
+                <h4 style="color: var(--dac-gold); text-align: left;">Decline Rules</h4>
+                <div class="list-compact" style="margin-bottom: 2rem;">
+                    <ul>
+                        <li>Age < 18 or > 70</li>
+                        <li>Terminal conditions (advanced cancer, organ failure)</li>
+                    </ul>
+                </div>
+
+                <h4 style="color: var(--dac-gold); text-align: left;">Warnings Triggered</h4>
+                <div class="list-compact" style="margin-bottom: 2rem;">
+                    <ul>
+                        <li>Cancer (remission), Kidney Disease, Liver Disease</li>
+                        <li>Smoker + Cardiac history</li>
+                        <li>≥ 3 pre-existing conditions</li>
+                    </ul>
+                </div>
+
+                <h4 style="color: var(--dac-gold); text-align: left;">Tier Multipliers</h4>
+                <div class="list-compact">
+                    <ul>
+                        <li><strong>Bronze</strong> 0.70× — Budget tier</li>
+                        <li><strong>Silver</strong> 1.00× — Baseline</li>
+                        <li><strong>Gold</strong> 1.45× — Premium</li>
+                        <li><strong>Platinum</strong> 2.10× — Comprehensive</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 9: Admin Pipeline (Retraining) -->
+            <section>
+                <h2 class="slide-title">Admin Pipeline: Model Calibration</h2>
+                <h4 style="color: var(--dac-gold); text-align: left; margin-top: 1rem;">Three Phases</h4>
+
+                <div style="background: #e8f4f8; padding: 1rem; margin: 1rem 0; border-left: 4px solid var(--dac-gold); text-align: left;">
+                    <p><strong>Phase 1: Upload Claims CSV</strong></p>
+                    <p>Admin uploads historical claims data (age, smoking, occupation, region, claim_count, claim_amount)</p>
+                </div>
+
+                <div style="background: #e8f4f8; padding: 1rem; margin: 1rem 0; border-left: 4px solid var(--dac-gold); text-align: left;">
+                    <p><strong>Phase 2: Preview O/E Ratios</strong></p>
+                    <p>System computes Observed vs Expected claim frequencies per coverage type. Shows percentage deltas.</p>
+                </div>
+
+                <div style="background: #e8f4f8; padding: 1rem; margin: 1rem 0; border-left: 4px solid var(--dac-gold); text-align: left;">
+                    <p><strong>Phase 3: Approve & Deploy</strong></p>
+                    <p>Admin reviews changes, approves calibrated coefficients. New COEFF version goes live in seconds.</p>
+                </div>
+
+                <p style="margin-top: 1.5rem; font-size: 0.9em; color: #666;"><strong>Audit Trail:</strong> All versions stored in <code>hp_glm_versions</code> table with timestamp, deployed_by, changes_applied</p>
+            </section>
+
+            <!-- Slide 10: Database Schema -->
+            <section>
+                <h2 class="slide-title">Data Model (PostgreSQL)</h2>
+                <table style="font-size: 0.75em !important;">
+                    <thead>
+                        <tr>
+                            <th>Table</th>
+                            <th>Purpose</th>
+                            <th>Key Columns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>hp_quote_log</code></td>
+                            <td>All quotes ever generated</td>
+                            <td>quote_ref, input_json, result_json, model_version, created_at</td>
+                        </tr>
+                        <tr>
+                            <td><code>hp_user_behavior</code></td>
+                            <td>User demographics & choices</td>
+                            <td>quote_ref, age, smoking, exercise, ipd_tier, include_opd, include_dental, include_maternity</td>
+                        </tr>
+                        <tr>
+                            <td><code>hp_claims</code></td>
+                            <td>Actual claims (uploaded via admin)</td>
+                            <td>coverage_type, age, smoking, region, claim_count, claim_amount, batch_id, ingested_at</td>
+                        </tr>
+                        <tr>
+                            <td><code>hp_glm_versions</code></td>
+                            <td>Model version history</td>
+                            <td>version, coefficients (JSONB), deployed_at, deployed_by, dataset_name, records</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Slide 11: Retraining Roadmap -->
+            <section>
+                <h2 class="slide-title">Retraining Roadmap</h2>
+
+                <h4 style="color: var(--dac-gold); text-align: left; margin-top: 1.5rem;">Phase 1: Today (Manual)</h4>
+                <div class="list-compact" style="text-align: left; margin-bottom: 2rem;">
+                    <ul>
+                        <li>Admin uploads real claims CSV</li>
+                        <li>Preview O/E ratios</li>
+                        <li>Manual approval to deploy</li>
+                    </ul>
+                </div>
+
+                <h4 style="color: var(--dac-gold); text-align: left;">Phase 2: Next (Synthetic Testing)</h4>
+                <div class="list-compact" style="text-align: left; margin-bottom: 2rem;">
+                    <ul>
+                        <li><strong>Synthetic claims generator</strong> — test the pipeline without waiting for real data</li>
+                        <li>Validate calibration logic under various scenarios</li>
+                        <li>Ensure admin tools work correctly</li>
+                    </ul>
+                </div>
+
+                <h4 style="color: var(--dac-gold); text-align: left;">Phase 3: Future (Automatic)</h4>
+                <div class="list-compact" style="text-align: left;">
+                    <ul>
+                        <li><strong>Monthly auto-calibration:</strong> Cron job runs 1st of month</li>
+                        <li>Pull accumulated claims from past 30 days</li>
+                        <li>Compute calibration, compare vs live model</li>
+                        <li>If drift acceptable: auto-deploy; else alert admin</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 12: Summary & Next Steps -->
+            <section>
+                <h2 class="slide-title">Summary & Next Steps</h2>
+
+                <div style="text-align: left; margin-top: 2rem;">
+                    <h4 style="color: var(--dac-gold);">Core Platform Strengths</h4>
+                    <div class="list-compact">
+                        <ul>
+                            <li>✓ Transparent, actuarially-grounded GLM</li>
+                            <li>✓ Browser fallback for resilience</li>
+                            <li>✓ Audit trail for compliance</li>
+                            <li>✓ Calibration pipeline ready for data</li>
+                        </ul>
+                    </div>
+
+                    <h4 style="color: var(--dac-gold); margin-top: 2rem;">Immediate Priorities</h4>
+                    <div class="list-compact">
+                        <ul>
+                            <li>🔄 Generate synthetic claims for pipeline testing</li>
+                            <li>🔄 Verify admin CSV upload works end-to-end</li>
+                            <li>🔄 Set up monthly calibration cron schedule</li>
+                            <li>🔄 Launch to first customer cohort</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="background: var(--dac-navy); color: white; padding: 1.5rem; margin-top: 2rem; border-radius: 8px; text-align: center;">
+                    <p style="font-size: 1.2em;"><strong>Ready to scale DAC HealthPrice across Cambodia & Vietnam</strong></p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            width: 1200,
+            height: 800
+        });
+    </script>
+</body>
+</html>

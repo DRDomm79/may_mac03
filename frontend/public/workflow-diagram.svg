@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 820" font-family="Arial, sans-serif">
+  <!-- Background -->
+  <rect width="1100" height="820" fill="#f7f8fa"/>
+
+  <!-- Title -->
+  <text x="550" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#0d2b7a">DAC HealthPrice — Full System Workflow</text>
+  <text x="550" y="62" text-anchor="middle" font-size="12" fill="#6b7280">Frontend (Vercel) · Backend (Render) · PostgreSQL · ML Models</text>
+
+  <!-- ═══ ROW 1: USER JOURNEY ═══ -->
+  <text x="30" y="100" font-size="11" font-weight="700" fill="#0d2b7a" letter-spacing="1">USER JOURNEY</text>
+  <line x1="30" y1="106" x2="1070" y2="106" stroke="#0d2b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Step boxes -->
+  <!-- Step 0: Profile -->
+  <rect x="30" y="118" width="160" height="90" rx="10" fill="#0d2b7a"/>
+  <text x="110" y="143" text-anchor="middle" font-size="11" font-weight="700" fill="#f5a623">STEP 1</text>
+  <text x="110" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="white">Profile</text>
+  <text x="110" y="176" text-anchor="middle" font-size="10" fill="#94a3b8">Age · Gender · Region</text>
+  <text x="110" y="190" text-anchor="middle" font-size="10" fill="#94a3b8">Family size · Marital status</text>
+
+  <!-- Arrow -->
+  <path d="M190 163 L210 163" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 1: Health -->
+  <rect x="210" y="118" width="170" height="90" rx="10" fill="#0d2b7a"/>
+  <text x="295" y="143" text-anchor="middle" font-size="11" font-weight="700" fill="#f5a623">STEP 2</text>
+  <text x="295" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="white">Health</text>
+  <text x="295" y="176" text-anchor="middle" font-size="10" fill="#94a3b8">Smoking · Occupation · Exercise</text>
+  <text x="295" y="190" text-anchor="middle" font-size="10" fill="#94a3b8">BMI · Alcohol · Meds · History</text>
+
+  <!-- Arrow -->
+  <path d="M380 163 L400 163" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2: Lifestyle -->
+  <rect x="400" y="118" width="170" height="90" rx="10" fill="#0d2b7a"/>
+  <text x="485" y="143" text-anchor="middle" font-size="11" font-weight="700" fill="#f5a623">STEP 3</text>
+  <text x="485" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="white">Lifestyle</text>
+  <text x="485" y="176" text-anchor="middle" font-size="10" fill="#94a3b8">Diet · Sleep · Stress</text>
+  <text x="485" y="190" text-anchor="middle" font-size="10" fill="#94a3b8">Motorbike · Water · Hospital dist.</text>
+
+  <!-- Arrow -->
+  <path d="M570 163 L590 163" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3: Plan -->
+  <rect x="590" y="118" width="170" height="90" rx="10" fill="#0d2b7a"/>
+  <text x="675" y="143" text-anchor="middle" font-size="11" font-weight="700" fill="#f5a623">STEP 4</text>
+  <text x="675" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="white">Plan Selection</text>
+  <text x="675" y="176" text-anchor="middle" font-size="10" fill="#94a3b8">Tier: Bronze/Silver/Gold/Platinum</text>
+  <text x="675" y="190" text-anchor="middle" font-size="10" fill="#94a3b8">Riders: OPD · Dental · Maternity</text>
+
+  <!-- Arrow -->
+  <path d="M760 163 L780 163" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: Quote -->
+  <rect x="780" y="118" width="160" height="90" rx="10" fill="#f5a623"/>
+  <text x="860" y="143" text-anchor="middle" font-size="11" font-weight="700" fill="#0d2b7a">STEP 5</text>
+  <text x="860" y="160" text-anchor="middle" font-size="13" font-weight="700" fill="#0d2b7a">Quote Result</text>
+  <text x="860" y="176" text-anchor="middle" font-size="10" fill="#0d2b7a">Annual · Monthly premium</text>
+  <text x="860" y="190" text-anchor="middle" font-size="10" fill="#0d2b7a">Tier benefits · Rider breakdown</text>
+
+  <!-- AI Chat bubble -->
+  <rect x="970" y="118" width="120" height="90" rx="10" fill="white" stroke="#0d2b7a" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="1030" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#0d2b7a">AI Chat</text>
+  <text x="1030" y="164" text-anchor="middle" font-size="10" fill="#4b5563">Advisor · Switch tier</text>
+  <text x="1030" y="178" text-anchor="middle" font-size="10" fill="#4b5563">Add riders</text>
+  <text x="1030" y="192" text-anchor="middle" font-size="10" fill="#4b5563">Recalculate</text>
+  <path d="M970 163 L940 163" stroke="#0d2b7a" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrd)"/>
+
+  <!-- ═══ ROW 2: PRICING ENGINE ═══ -->
+  <text x="30" y="250" font-size="11" font-weight="700" fill="#0d2b7a" letter-spacing="1">PRICING ENGINE — GET MY QUOTE CLICK</text>
+  <line x1="30" y1="256" x2="1070" y2="256" stroke="#0d2b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Arrow down from Plan step -->
+  <path d="M675 208 L675 268" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- API call box -->
+  <rect x="30" y="268" width="200" height="80" rx="10" fill="white" stroke="#0d2b7a" stroke-width="1.5"/>
+  <text x="130" y="293" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2b7a">POST /api/v2/price</text>
+  <text x="130" y="310" text-anchor="middle" font-size="10" fill="#4b5563">All 20+ input variables</text>
+  <text x="130" y="325" text-anchor="middle" font-size="10" fill="#4b5563">45s timeout · AbortSignal</text>
+  <text x="130" y="340" text-anchor="middle" font-size="10" fill="#6b7280">→ Render backend</text>
+
+  <!-- Arrow -->
+  <path d="M230 308 L260 308" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Decision diamond -->
+  <polygon points="310,278 380,308 310,338 240,308" fill="#fff7ed" stroke="#f5a623" stroke-width="2"/>
+  <text x="310" y="304" text-anchor="middle" font-size="10" font-weight="700" fill="#0d2b7a">API</text>
+  <text x="310" y="318" text-anchor="middle" font-size="10" font-weight="700" fill="#0d2b7a">OK?</text>
+
+  <!-- Success path -->
+  <path d="M380 308 L420 308" stroke="#059669" stroke-width="2" marker-end="url(#arrok)"/>
+  <text x="400" y="300" text-anchor="middle" font-size="10" fill="#059669">Yes</text>
+  <rect x="420" y="278" width="160" height="60" rx="10" fill="#e1f5ee" stroke="#059669" stroke-width="1.5"/>
+  <text x="500" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="#059669">ML Model</text>
+  <text x="500" y="320" text-anchor="middle" font-size="10" fill="#059669">Poisson freq + GBR sev</text>
+  <text x="500" y="333" text-anchor="middle" font-size="10" fill="#059669">Logged to PostgreSQL</text>
+
+  <!-- Failure path -->
+  <path d="M310 338 L310 380" stroke="#ef4444" stroke-width="2" marker-end="url(#arrerr)"/>
+  <text x="320" y="368" font-size="10" fill="#ef4444">No / Timeout</text>
+  <rect x="230" y="380" width="160" height="60" rx="10" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="310" y="405" text-anchor="middle" font-size="12" font-weight="700" fill="#ef4444">Local Fallback</text>
+  <text x="310" y="422" text-anchor="middle" font-size="10" fill="#ef4444">localPrice() in browser</text>
+  <text x="310" y="435" text-anchor="middle" font-size="10" fill="#ef4444">All 20+ factor multipliers</text>
+
+  <!-- Both paths merge to result -->
+  <path d="M580 308 L640 308" stroke="#f5a623" stroke-width="2" marker-end="url(#arr)"/>
+  <path d="M310 440 L310 470 L720 470 L720 338" stroke="#f5a623" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+  <rect x="640" y="278" width="160" height="60" rx="10" fill="#0d2b7a"/>
+  <text x="720" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="white">Premium Output</text>
+  <text x="720" y="320" text-anchor="middle" font-size="10" fill="#94a3b8">Annual + monthly totals</text>
+  <text x="720" y="333" text-anchor="middle" font-size="10" fill="#f5a623">Display on Step 5</text>
+
+  <!-- ═══ ROW 3: BACKEND SERVICES ═══ -->
+  <text x="30" y="510" font-size="11" font-weight="700" fill="#0d2b7a" letter-spacing="1">BACKEND SERVICES (Render — Python FastAPI)</text>
+  <line x1="30" y1="516" x2="1070" y2="516" stroke="#0d2b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- ML Models -->
+  <rect x="30" y="530" width="200" height="100" rx="10" fill="white" stroke="#0d2b7a" stroke-width="1.5"/>
+  <text x="130" y="555" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2b7a">ML Models (.pkl)</text>
+  <text x="130" y="572" text-anchor="middle" font-size="10" fill="#4b5563">ipd_freq · ipd_sev</text>
+  <text x="130" y="587" text-anchor="middle" font-size="10" fill="#4b5563">opd_freq · opd_sev</text>
+  <text x="130" y="602" text-anchor="middle" font-size="10" fill="#4b5563">dental_freq · dental_sev</text>
+  <text x="130" y="617" text-anchor="middle" font-size="10" fill="#4b5563">maternity_freq · maternity_sev</text>
+
+  <!-- PostgreSQL -->
+  <rect x="260" y="530" width="200" height="100" rx="10" fill="white" stroke="#0d2b7a" stroke-width="1.5"/>
+  <text x="360" y="555" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2b7a">PostgreSQL</text>
+  <text x="360" y="572" text-anchor="middle" font-size="10" fill="#4b5563">hp_quote_log</text>
+  <text x="360" y="587" text-anchor="middle" font-size="10" fill="#4b5563">hp_user_behavior</text>
+  <text x="360" y="602" text-anchor="middle" font-size="10" fill="#4b5563">hp_claims (training data)</text>
+  <text x="360" y="617" text-anchor="middle" font-size="10" fill="#6b7280">Every quote logged here</text>
+
+  <!-- Admin Panel -->
+  <rect x="490" y="530" width="200" height="100" rx="10" fill="white" stroke="#0d2b7a" stroke-width="1.5"/>
+  <text x="590" y="555" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2b7a">Admin Panel</text>
+  <text x="590" y="572" text-anchor="middle" font-size="10" fill="#4b5563">API key protected</text>
+  <text x="590" y="587" text-anchor="middle" font-size="10" fill="#4b5563">Upload CSV claims data</text>
+  <text x="590" y="602" text-anchor="middle" font-size="10" fill="#4b5563">View user behavior stats</text>
+  <text x="590" y="617" text-anchor="middle" font-size="10" fill="#4b5563">Trigger model retrain</text>
+
+  <!-- Retrain Engine -->
+  <rect x="720" y="530" width="200" height="100" rx="10" fill="white" stroke="#0d2b7a" stroke-width="1.5"/>
+  <text x="820" y="555" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2b7a">Auto-Retrain</text>
+  <text x="820" y="572" text-anchor="middle" font-size="10" fill="#4b5563">Requires ≥500 claim rows</text>
+  <text x="820" y="587" text-anchor="middle" font-size="10" fill="#4b5563">Poisson freq model</text>
+  <text x="820" y="602" text-anchor="middle" font-size="10" fill="#4b5563">GBR severity model</text>
+  <text x="820" y="617" text-anchor="middle" font-size="10" fill="#4b5563">Champion/challenger compare</text>
+
+  <!-- Health Check -->
+  <rect x="950" y="530" width="120" height="100" rx="10" fill="white" stroke="#0d2b7a" stroke-width="1.5"/>
+  <text x="1010" y="555" text-anchor="middle" font-size="12" font-weight="700" fill="#0d2b7a">Health</text>
+  <text x="1010" y="572" text-anchor="middle" font-size="10" fill="#4b5563">GET /health</text>
+  <text x="1010" y="587" text-anchor="middle" font-size="10" fill="#4b5563">Models loaded?</text>
+  <text x="1010" y="602" text-anchor="middle" font-size="10" fill="#4b5563">DB connected?</text>
+  <text x="1010" y="617" text-anchor="middle" font-size="10" fill="#4b5563">Version info</text>
+
+  <!-- Connector arrows between backend services -->
+  <path d="M690 580 L720 580" stroke="#0d2b7a" stroke-width="1.5" marker-end="url(#arrd)"/>
+  <path d="M460 580 L490 580" stroke="#0d2b7a" stroke-width="1.5" marker-end="url(#arrd)"/>
+
+  <!-- ═══ ROW 4: NEW VARIABLES SUMMARY ═══ -->
+  <text x="30" y="668" font-size="11" font-weight="700" fill="#0d2b7a" letter-spacing="1">NEW RISK VARIABLES ADDED (LOCAL PRICING MULTIPLIERS)</text>
+  <line x1="30" y1="674" x2="1070" y2="674" stroke="#0d2b7a" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Variable chips row 1 -->
+  <rect x="30" y="684" width="70" height="24" rx="5" fill="#0d2b7a"/><text x="65" y="700" text-anchor="middle" font-size="10" fill="white">BMI</text>
+  <rect x="108" y="684" width="90" height="24" rx="5" fill="#0d2b7a"/><text x="153" y="700" text-anchor="middle" font-size="10" fill="white">Alcohol</text>
+  <rect x="206" y="684" width="130" height="24" rx="5" fill="#0d2b7a"/><text x="271" y="700" text-anchor="middle" font-size="10" fill="white">Hospitalizations</text>
+  <rect x="344" y="684" width="130" height="24" rx="5" fill="#0d2b7a"/><text x="409" y="700" text-anchor="middle" font-size="10" fill="white">Medications count</text>
+  <rect x="482" y="684" width="120" height="24" rx="5" fill="#0d2b7a"/><text x="542" y="700" text-anchor="middle" font-size="10" fill="white">Family history</text>
+  <rect x="610" y="684" width="120" height="24" rx="5" fill="#0d2b7a"/><text x="670" y="700" text-anchor="middle" font-size="10" fill="white">Marital status</text>
+  <rect x="738" y="684" width="70" height="24" rx="5" fill="#0d2b7a"/><text x="773" y="700" text-anchor="middle" font-size="10" fill="white">Diet</text>
+  <rect x="816" y="684" width="70" height="24" rx="5" fill="#0d2b7a"/><text x="851" y="700" text-anchor="middle" font-size="10" fill="white">Sleep</text>
+  <rect x="894" y="684" width="70" height="24" rx="5" fill="#0d2b7a"/><text x="929" y="700" text-anchor="middle" font-size="10" fill="white">Stress</text>
+  <rect x="972" y="684" width="98" height="24" rx="5" fill="#0d2b7a"/><text x="1021" y="700" text-anchor="middle" font-size="10" fill="white">Motorbike</text>
+
+  <!-- Variable chips row 2 -->
+  <rect x="30" y="716" width="130" height="24" rx="5" fill="#f5a623"/><text x="95" y="732" text-anchor="middle" font-size="10" fill="#0d2b7a" font-weight="700">Water access</text>
+  <rect x="168" y="716" width="160" height="24" rx="5" fill="#f5a623"/><text x="248" y="732" text-anchor="middle" font-size="10" fill="#0d2b7a" font-weight="700">Healthcare proximity</text>
+
+  <!-- Legend -->
+  <rect x="400" y="714" width="12" height="12" rx="2" fill="#0d2b7a"/>
+  <text x="418" y="725" font-size="10" fill="#4b5563">Health step variables</text>
+  <rect x="560" y="714" width="12" height="12" rx="2" fill="#f5a623"/>
+  <text x="578" y="725" font-size="10" fill="#4b5563">Lifestyle step variables</text>
+
+  <!-- Footer -->
+  <text x="550" y="790" text-anchor="middle" font-size="11" fill="#6b7280">DAC HealthPrice · dactuaries.com · Built with React + FastAPI + scikit-learn</text>
+  <text x="550" y="808" text-anchor="middle" font-size="10" fill="#9ca3af">Generated 2026-03-26</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f5a623"/>
+    </marker>
+    <marker id="arrd" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#0d2b7a"/>
+    </marker>
+    <marker id="arrok" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
+    </marker>
+    <marker id="arrerr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/>
+    </marker>
+  </defs>
+</svg>

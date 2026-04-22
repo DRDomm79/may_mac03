@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>DAC HealthPrice — Platform Architecture</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1b4b; font-family: 'Segoe UI', sans-serif; display: flex;
+    flex-direction: column; align-items: center; padding: 32px 16px 64px; }
+  h1 { color: #f5a623; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+  .subtitle { color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 32px; }
+  svg { max-width: 1200px; width: 100%; }
+</style>
+</head>
+<body>
+<h1>DAC HealthPrice Platform</h1>
+<p class="subtitle">System Architecture · v2.3 · Cambodia &amp; Vietnam</p>
+
+<svg viewBox="0 0 1200 920" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', sans-serif">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="navyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a4fba;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d2b7a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="darkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5c563;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e67e00;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f766e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#064e3b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6d28d9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4c1d95;stop-opacity:1" />
+    </linearGradient>
+    <!-- Arrow marker -->
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f5a623" opacity="0.8"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#64748b" opacity="0.8"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#10b981" opacity="0.8"/>
+    </marker>
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- ════════════════════════════════════════════════════════════
+       BACKGROUND COLUMNS
+  ════════════════════════════════════════════════════════════ -->
+  <!-- Column labels -->
+  <text x="200" y="28" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="700" letter-spacing="2">USERS</text>
+  <text x="520" y="28" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="700" letter-spacing="2">FRONTEND · VERCEL</text>
+  <text x="840" y="28" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="700" letter-spacing="2">BACKEND · RENDER</text>
+  <text x="1090" y="28" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="700" letter-spacing="2">DATA &amp; SERVICES</text>
+
+  <!-- Column dividers -->
+  <line x1="340" y1="36" x2="340" y2="900" stroke="#1e293b" stroke-width="1" />
+  <line x1="700" y1="36" x2="700" y2="900" stroke="#1e293b" stroke-width="1" />
+  <line x1="960" y1="36" x2="960" y2="900" stroke="#1e293b" stroke-width="1" />
+
+  <!-- ════════════════════════════════════════════════════════════
+       USERS
+  ════════════════════════════════════════════════════════════ -->
+  <!-- Public user -->
+  <rect x="60" y="50" width="160" height="80" rx="12" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="140" y="78" text-anchor="middle" font-size="24">👤</text>
+  <text x="140" y="98" text-anchor="middle" fill="white" font-size="13" font-weight="700">Public Users</text>
+  <text x="140" y="116" text-anchor="middle" fill="#94a3b8" font-size="11">Cambodia · Vietnam</text>
+
+  <!-- Actuary / Admin -->
+  <rect x="60" y="170" width="160" height="80" rx="12" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="140" y="198" text-anchor="middle" font-size="24">🧮</text>
+  <text x="140" y="218" text-anchor="middle" fill="white" font-size="13" font-weight="700">Actuaries / Admins</text>
+  <text x="140" y="236" text-anchor="middle" fill="#94a3b8" font-size="11">DAC Staff · Internal</text>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FRONTEND
+  ════════════════════════════════════════════════════════════ -->
+
+  <!-- ── Public Site ── -->
+  <rect x="355" y="42" width="330" height="220" rx="14" fill="url(#navyGrad)" stroke="#1a4fba" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="355" y="42" width="330" height="38" rx="14" fill="#1a4fba"/>
+  <rect x="355" y="62" width="330" height="18" fill="#1a4fba"/>
+  <text x="520" y="67" text-anchor="middle" fill="#f5a623" font-size="13" font-weight="800">🌐  PUBLIC SITE</text>
+  <text x="520" y="84" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">React 19 · Vite · Single-page App</text>
+
+  <!-- public site items -->
+  <rect x="371" y="95" width="140" height="30" rx="7" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="441" y="115" text-anchor="middle" fill="white" font-size="12">🏠 Home / About / Contact</text>
+
+  <rect x="523" y="95" width="148" height="30" rx="7" fill="rgba(245,197,99,0.15)" stroke="#f5a623" stroke-width="1"/>
+  <text x="597" y="115" text-anchor="middle" fill="#f5a623" font-size="12" font-weight="700">⚡ Pricing Wizard</text>
+
+  <rect x="371" y="134" width="300" height="54" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="521" y="153" text-anchor="middle" fill="#94a3b8" font-size="11">4-step quote flow</text>
+  <text x="521" y="169" text-anchor="middle" fill="white" font-size="11">Age · Smoking · Occupation · Region · Tier</text>
+  <text x="521" y="184" text-anchor="middle" fill="#94a3b8" font-size="10">Remote API → Local GLM fallback</text>
+
+  <rect x="371" y="198" width="300" height="52" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="521" y="217" text-anchor="middle" fill="#94a3b8" font-size="11">🤖 AI Chatbot</text>
+  <text x="521" y="235" text-anchor="middle" fill="white" font-size="11">Proxied via /api/v2/chat → Claude API</text>
+
+  <!-- ── Health Admin Dashboard ── -->
+  <rect x="355" y="278" width="330" height="290" rx="14" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="355" y="278" width="330" height="38" rx="14" fill="#1e293b"/>
+  <rect x="355" y="298" width="330" height="18" fill="#1e293b"/>
+  <text x="520" y="303" text-anchor="middle" fill="#f5a623" font-size="13" font-weight="800">🔐  HEALTH ADMIN DASHBOARD</text>
+  <text x="520" y="320" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">Staff login · InsuranceDashboard.jsx</text>
+
+  <!-- admin tabs 2×4 grid -->
+  <g font-size="11">
+    <!-- Row 1 -->
+    <rect x="368" y="330" width="146" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="441" y="348" text-anchor="middle" fill="white">📋 Quick Quote</text>
+
+    <rect x="522" y="330" width="150" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="597" y="348" text-anchor="middle" fill="white">📦 Batch Quotes</text>
+
+    <!-- Row 2 -->
+    <rect x="368" y="366" width="146" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="441" y="384" text-anchor="middle" fill="white">🔬 Data Calibration</text>
+
+    <rect x="522" y="366" width="150" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="597" y="384" text-anchor="middle" fill="white">📊 Model Metrics</text>
+
+    <!-- Row 3 -->
+    <rect x="368" y="402" width="146" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="441" y="420" text-anchor="middle" fill="white">🔒 Security</text>
+
+    <rect x="522" y="402" width="150" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="597" y="420" text-anchor="middle" fill="white">⚙️ Policy Optimizer</text>
+
+    <!-- Row 4 -->
+    <rect x="368" y="438" width="146" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="441" y="456" text-anchor="middle" fill="white">🎲 Claims Simulator</text>
+
+    <rect x="522" y="438" width="150" height="28" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <text x="597" y="456" text-anchor="middle" fill="#94a3b8">Coefficients View</text>
+  </g>
+
+  <!-- GLM coefficients display -->
+  <rect x="368" y="475" width="304" height="82" rx="8" fill="rgba(245,197,99,0.06)" stroke="rgba(245,197,99,0.2)" stroke-width="1"/>
+  <text x="520" y="494" text-anchor="middle" fill="#f5a623" font-size="11" font-weight="700">Poisson-Gamma GLM Coefficients (Health)</text>
+  <text x="520" y="511" text-anchor="middle" fill="#94a3b8" font-size="10">Age · Smoking · Occupation · Region · Tier</text>
+  <text x="520" y="527" text-anchor="middle" fill="white" font-size="10">IPD · OPD · Dental · Maternity</text>
+  <text x="520" y="543" text-anchor="middle" fill="#94a3b8" font-size="10">Model v2.2 · Last calibrated 2026-03-28</text>
+
+  <!-- ── Auto Pricing Lab ── -->
+  <rect x="355" y="584" width="330" height="295" rx="14" fill="url(#darkGrad)" stroke="#6d28d9" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="355" y="584" width="330" height="38" rx="14" fill="#4c1d95"/>
+  <rect x="355" y="604" width="330" height="18" fill="#4c1d95"/>
+  <text x="520" y="609" text-anchor="middle" fill="#f5a623" font-size="13" font-weight="800">🚗  AUTO PRICING LAB v2</text>
+  <text x="520" y="626" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">AutoPricingLab.jsx · GLM + ML Hybrid</text>
+
+  <!-- 3 tabs -->
+  <g font-size="11">
+    <rect x="368" y="636" width="92" height="28" rx="6" fill="rgba(109,40,217,0.3)" stroke="#7c3aed" stroke-width="1"/>
+    <text x="414" y="654" text-anchor="middle" fill="white">🧮 Quote Lab</text>
+
+    <rect x="468" y="636" width="104" height="28" rx="6" fill="rgba(109,40,217,0.3)" stroke="#7c3aed" stroke-width="1"/>
+    <text x="520" y="654" text-anchor="middle" fill="white">👥 Office Profiles</text>
+
+    <rect x="580" y="636" width="92" height="28" rx="6" fill="rgba(245,197,99,0.2)" stroke="#f5a623" stroke-width="1"/>
+    <text x="626" y="654" text-anchor="middle" fill="#f5a623" font-weight="700">📋 Coeff Editor</text>
+  </g>
+
+  <!-- Feature boxes -->
+  <rect x="368" y="673" width="304" height="58" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="520" y="693" text-anchor="middle" fill="#94a3b8" font-size="10">Full GLM breakdown · Multiplier table · Price build-up</text>
+  <text x="520" y="709" text-anchor="middle" fill="white" font-size="10">ML badge (model_source: ml | glm_only)</text>
+  <text x="520" y="725" text-anchor="middle" fill="#94a3b8" font-size="10">8 MODEL_AUTO_OFFICE personas · Portfolio stats</text>
+
+  <!-- COEFF_AUTO inline -->
+  <rect x="368" y="740" width="304" height="128" rx="8" fill="rgba(245,197,99,0.06)" stroke="rgba(245,197,99,0.25)" stroke-width="1"/>
+  <text x="520" y="758" text-anchor="middle" fill="#f5a623" font-size="11" font-weight="700">Editable COEFF_AUTO</text>
+  <text x="520" y="774" text-anchor="middle" fill="#94a3b8" font-size="10">Live edit → instant recalculation in all tabs</text>
+
+  <g font-size="10" fill="white">
+    <text x="383" y="793">• Base rates (freq × sev)</text>
+    <text x="383" y="809">• Vehicle &amp; driver age multipliers</text>
+    <text x="383" y="825">• Region factors (11 regions)</text>
+    <text x="383" y="841">• Loading · Tier · Deductible</text>
+    <text x="520" y="793">• Accident history</text>
+    <text x="520" y="809">• Purple diff highlighting</text>
+    <text x="520" y="825">• Save draft → localStorage</text>
+    <text x="520" y="841">• Reset to defaults</text>
+  </g>
+
+  <!-- shared/COEFF_AUTO -->
+  <rect x="368" y="875" width="140" height="24" rx="5" fill="rgba(109,40,217,0.2)" stroke="#7c3aed" stroke-width="1"/>
+  <text x="438" y="891" text-anchor="middle" fill="#a78bfa" font-size="10">src/shared/COEFF_AUTO.ts</text>
+  <rect x="520" y="875" width="152" height="24" rx="5" fill="rgba(109,40,217,0.2)" stroke="#7c3aed" stroke-width="1"/>
+  <text x="596" y="891" text-anchor="middle" fill="#a78bfa" font-size="10">shared/COEFF_AUTO.py (backend)</text>
+
+  <!-- ════════════════════════════════════════════════════════════
+       BACKEND
+  ════════════════════════════════════════════════════════════ -->
+  <!-- Health APIs -->
+  <rect x="715" y="42" width="232" height="340" rx="14" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="715" y="42" width="232" height="38" rx="14" fill="#0f766e"/>
+  <rect x="715" y="62" width="232" height="18" fill="#0f766e"/>
+  <text x="831" y="67" text-anchor="middle" fill="white" font-size="13" font-weight="800">⚕️  HEALTH APIs</text>
+  <text x="831" y="84" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10">FastAPI · app/main.py · v2.3</text>
+
+  <g font-size="11">
+    <rect x="726" y="96" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="113" text-anchor="middle" fill="white">POST /api/v2/price</text>
+
+    <rect x="726" y="126" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="143" text-anchor="middle" fill="white">POST /api/v2/chat</text>
+
+    <rect x="726" y="156" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="173" text-anchor="middle" fill="white">GET /api/v2/model-info</text>
+
+    <rect x="726" y="186" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="203" text-anchor="middle" fill="white">POST /api/v2/admin/upload-dataset</text>
+
+    <rect x="726" y="216" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="233" text-anchor="middle" fill="white">GET /api/v2/admin/user-behavior</text>
+
+    <rect x="726" y="246" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="263" text-anchor="middle" fill="white">GET /api/v2/reference</text>
+  </g>
+
+  <!-- Health Pricing Engine -->
+  <rect x="726" y="280" width="210" height="90" rx="8" fill="rgba(15,118,110,0.15)" stroke="#0f766e" stroke-width="1"/>
+  <text x="831" y="300" text-anchor="middle" fill="#5eead4" font-size="11" font-weight="700">Poisson-Gamma GLM Engine</text>
+  <text x="831" y="318" text-anchor="middle" fill="#94a3b8" font-size="10">8 models: IPD/OPD/Dental/Maternity</text>
+  <text x="831" y="334" text-anchor="middle" fill="white" font-size="10">freq × sev × multipliers × tier</text>
+  <text x="831" y="350" text-anchor="middle" fill="#94a3b8" font-size="10">Premium = E[Loss] × (1+0.30) × TierFactor</text>
+  <text x="831" y="366" text-anchor="middle" fill="#94a3b8" font-size="10">Fallback: local GLM if API timeout (45s)</text>
+
+  <!-- Auto APIs -->
+  <rect x="715" y="398" width="232" height="320" rx="14" fill="url(#darkGrad)" stroke="#6d28d9" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="715" y="398" width="232" height="38" rx="14" fill="#4c1d95"/>
+  <rect x="715" y="418" width="232" height="18" fill="#4c1d95"/>
+  <text x="831" y="423" text-anchor="middle" fill="white" font-size="13" font-weight="800">🚗  AUTO APIs</text>
+  <text x="831" y="440" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">app/routes/auto_pricing.py</text>
+
+  <g font-size="11">
+    <rect x="726" y="451" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="468" text-anchor="middle" fill="white">POST /api/v1/auto/price</text>
+
+    <rect x="726" y="481" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="498" text-anchor="middle" fill="white">POST /api/v1/auto/price/batch</text>
+
+    <rect x="726" y="511" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="528" text-anchor="middle" fill="white">GET /api/v1/auto/monitoring</text>
+
+    <rect x="726" y="541" width="210" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="831" y="558" text-anchor="middle" fill="white">POST /api/v1/auto/train</text>
+  </g>
+
+  <!-- Auto Pricing Pipeline -->
+  <rect x="726" y="576" width="210" height="130" rx="8" fill="rgba(109,40,217,0.12)" stroke="#6d28d9" stroke-width="1"/>
+  <text x="831" y="595" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="700">GLM + ML Hybrid Pipeline</text>
+
+  <rect x="736" y="603" width="190" height="20" rx="4" fill="rgba(255,255,255,0.06)"/>
+  <text x="831" y="617" text-anchor="middle" fill="white" font-size="10">1. GLM · pricing_engine/glm_pricing.py</text>
+
+  <rect x="736" y="628" width="190" height="20" rx="4" fill="rgba(255,255,255,0.06)"/>
+  <text x="831" y="642" text-anchor="middle" fill="white" font-size="10">2. ML Adj · ml/inference.py (LightGBM)</text>
+
+  <rect x="736" y="653" width="190" height="20" rx="4" fill="rgba(255,255,255,0.06)"/>
+  <text x="831" y="667" text-anchor="middle" fill="white" font-size="10">3. Final · final_pricing.py</text>
+
+  <rect x="736" y="678" width="190" height="20" rx="4" fill="rgba(255,255,255,0.06)"/>
+  <text x="831" y="692" text-anchor="middle" fill="white" font-size="10">4. Feedback · feedback/metrics.py</text>
+
+  <!-- Monitoring -->
+  <rect x="715" y="735" width="232" height="80" rx="12" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="831" y="762" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="700">📡 Drift Monitoring</text>
+  <text x="831" y="780" text-anchor="middle" fill="#94a3b8" font-size="10">monitoring/monitor.py</text>
+  <text x="831" y="796" text-anchor="middle" fill="white" font-size="10">Warn &gt;15% · Critical &gt;25% LR deviation</text>
+
+  <!-- Anti-scraping / Security -->
+  <rect x="715" y="830" width="232" height="60" rx="12" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="831" y="856" text-anchor="middle" fill="#f87171" font-size="12" font-weight="700">🔒 Security Layer</text>
+  <text x="831" y="874" text-anchor="middle" fill="#94a3b8" font-size="10">Rate limit · Anti-scraping · Partner API keys</text>
+
+  <!-- ════════════════════════════════════════════════════════════
+       DATA & SERVICES
+  ════════════════════════════════════════════════════════════ -->
+  <!-- Supabase Health DB -->
+  <rect x="975" y="42" width="210" height="200" rx="14" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="975" y="42" width="210" height="38" rx="14" fill="#155e75"/>
+  <rect x="975" y="62" width="210" height="18" fill="#155e75"/>
+  <text x="1080" y="67" text-anchor="middle" fill="white" font-size="13" font-weight="800">🗄️  SUPABASE · HEALTH</text>
+  <text x="1080" y="84" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">PostgreSQL · asyncpg</text>
+
+  <g font-size="11">
+    <rect x="986" y="96" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="113" text-anchor="middle" fill="white">hp_quote_log</text>
+
+    <rect x="986" y="126" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="143" text-anchor="middle" fill="white">hp_user_behavior</text>
+
+    <rect x="986" y="156" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="173" text-anchor="middle" fill="white">hp_claims</text>
+
+    <rect x="986" y="186" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="203" text-anchor="middle" fill="white">hp_model_registry</text>
+  </g>
+
+  <!-- Supabase Auto DB -->
+  <rect x="975" y="258" width="210" height="200" rx="14" fill="url(#darkGrad)" stroke="#6d28d9" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="975" y="258" width="210" height="38" rx="14" fill="#4c1d95"/>
+  <rect x="975" y="278" width="210" height="18" fill="#4c1d95"/>
+  <text x="1080" y="283" text-anchor="middle" fill="white" font-size="13" font-weight="800">🗄️  SUPABASE · AUTO</text>
+  <text x="1080" y="300" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">PostgreSQL · planned schema</text>
+
+  <g font-size="11">
+    <rect x="986" y="312" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="329" text-anchor="middle" fill="white">hp_auto_policies</text>
+
+    <rect x="986" y="342" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="359" text-anchor="middle" fill="white">hp_auto_claims</text>
+
+    <rect x="986" y="372" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="389" text-anchor="middle" fill="white">hp_auto_models</text>
+
+    <rect x="986" y="402" width="188" height="24" rx="5" fill="rgba(255,255,255,0.06)"/>
+    <text x="1080" y="419" text-anchor="middle" fill="white">hp_auto_monitoring</text>
+  </g>
+
+  <!-- ML Model Files -->
+  <rect x="975" y="474" width="210" height="185" rx="14" fill="url(#darkGrad)" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="975" y="474" width="210" height="38" rx="14" fill="#1e3a5f"/>
+  <rect x="975" y="494" width="210" height="18" fill="#1e3a5f"/>
+  <text x="1080" y="499" text-anchor="middle" fill="white" font-size="13" font-weight="800">🧠  ML MODELS</text>
+  <text x="1080" y="516" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10">models/ · .pkl files · Render disk</text>
+
+  <text x="986" y="538" fill="#5eead4" font-size="10" font-weight="700">Health (Poisson-Gamma GLM):</text>
+  <g font-size="10" fill="#94a3b8">
+    <text x="990" y="553">ipd_freq.pkl · ipd_sev.pkl</text>
+    <text x="990" y="568">opd_freq.pkl · opd_sev.pkl</text>
+    <text x="990" y="583">dental_freq.pkl · dental_sev.pkl</text>
+    <text x="990" y="598">maternity_freq.pkl · maternity_sev.pkl</text>
+    <text x="990" y="613">model_meta.pkl (R², MSE, MAE)</text>
+  </g>
+
+  <text x="986" y="632" fill="#a78bfa" font-size="10" font-weight="700">Auto (LightGBM residual):</text>
+  <g font-size="10" fill="#94a3b8">
+    <text x="990" y="647">auto_ml_v{n}.pkl · auto_ml_meta.json</text>
+  </g>
+
+  <!-- Anthropic Claude -->
+  <rect x="975" y="675" width="210" height="80" rx="12" fill="url(#darkGrad)" stroke="#f5a623" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1080" y="703" text-anchor="middle" fill="#f5a623" font-size="13" font-weight="800">✨ Anthropic Claude API</text>
+  <text x="1080" y="720" text-anchor="middle" fill="#94a3b8" font-size="10">claude-sonnet-4-6</text>
+  <text x="1080" y="737" text-anchor="middle" fill="white" font-size="10">Proxied via backend /api/v2/chat</text>
+
+  <!-- Cloudflare Worker -->
+  <rect x="975" y="770" width="210" height="60" rx="12" fill="url(#darkGrad)" stroke="#f97316" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="1080" y="797" text-anchor="middle" fill="#fb923c" font-size="12" font-weight="700">☁️ Cloudflare Worker</text>
+  <text x="1080" y="815" text-anchor="middle" fill="#94a3b8" font-size="10">Admin proxy · CSP allowed origin</text>
+
+  <!-- ════════════════════════════════════════════════════════════
+       ARROWS / CONNECTIONS
+  ════════════════════════════════════════════════════════════ -->
+
+  <!-- Users → Frontend -->
+  <line x1="220" y1="90" x2="352" y2="130" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)" opacity="0.7"/>
+  <line x1="220" y1="210" x2="352" y2="330" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)" opacity="0.6"/>
+  <line x1="220" y1="210" x2="352" y2="640" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)" opacity="0.5"/>
+
+  <!-- Frontend Public → Backend Health -->
+  <line x1="685" y1="130" x2="713" y2="200" stroke="#f5a623" stroke-width="2" marker-end="url(#arrow)" opacity="0.8"/>
+  <text x="695" y="158" fill="#f5a623" font-size="9" text-anchor="middle" transform="rotate(-12,695,158)">POST /price</text>
+
+  <!-- Frontend Admin → Backend Health -->
+  <line x1="685" y1="380" x2="713" y2="320" stroke="#5eead4" stroke-width="1.5" marker-end="url(#arrowGreen)" opacity="0.7"/>
+
+  <!-- Frontend Auto → Backend Auto -->
+  <line x1="685" y1="700" x2="713" y2="560" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.7"/>
+  <text x="700" y="640" fill="#a78bfa" font-size="9" text-anchor="middle" transform="rotate(-30,700,640)">/auto/price</text>
+
+  <!-- Backend Health → DB Health -->
+  <line x1="947" y1="200" x2="973" y2="160" stroke="#5eead4" stroke-width="1.5" marker-end="url(#arrowGreen)" opacity="0.7"/>
+
+  <!-- Backend Health → ML Models -->
+  <line x1="947" y1="300" x2="973" y2="530" stroke="#5eead4" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowGreen)" opacity="0.5"/>
+
+  <!-- Backend Auto → DB Auto -->
+  <line x1="947" y1="500" x2="973" y2="380" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- Backend Auto → ML Models -->
+  <line x1="947" y1="600" x2="973" y2="600" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.7"/>
+
+  <!-- Backend Chat → Anthropic -->
+  <line x1="947" y1="200" x2="973" y2="715" stroke="#f5a623" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)" opacity="0.4"/>
+
+  <!-- ════════════════════════════════════════════════════════════
+       LEGEND
+  ════════════════════════════════════════════════════════════ -->
+  <rect x="20" y="840" width="300" height="65" rx="10" fill="rgba(0,0,0,0.3)" stroke="#334155" stroke-width="1"/>
+  <text x="34" y="861" fill="#94a3b8" font-size="11" font-weight="700">LEGEND</text>
+  <line x1="34" y1="875" x2="70" y2="875" stroke="#f5a623" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="78" y="879" fill="#f5a623" font-size="10">Public / Actuary flow</text>
+  <line x1="34" y1="895" x2="70" y2="895" stroke="#10b981" stroke-width="1.5"/>
+  <text x="78" y="899" fill="#10b981" font-size="10">Health insurance data flow</text>
+  <line x1="170" y1="875" x2="206" y2="875" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="214" y="879" fill="#a78bfa" font-size="10">Auto insurance flow</text>
+  <line x1="170" y1="895" x2="206" y2="895" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="214" y="899" fill="#64748b" font-size="10">Internal / ML pipeline</text>
+
+  <!-- Version stamp -->
+  <text x="1180" y="910" text-anchor="end" fill="#334155" font-size="10">DAC HealthPrice v2.3 · 2026-04-03</text>
+</svg>
+</body>
+</html>

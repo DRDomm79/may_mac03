@@ -1,0 +1,31 @@
+age,smoking,occupation,region,tier,dependents,opd,dental,maternity
+25,Never,Office/Desk,Phnom Penh,Bronze,1,false,false,false
+28,Never,Retail/Service,Phnom Penh,Silver,1,true,false,false
+30,Never,Healthcare,Siem Reap,Silver,1,true,false,true
+32,Never,Office/Desk,Phnom Penh,Silver,2,true,false,true
+35,Never,Office/Desk,Phnom Penh,Silver,1,true,false,false
+35,Former,Office/Desk,Phnom Penh,Silver,1,true,false,false
+35,Current,Office/Desk,Phnom Penh,Silver,1,true,false,false
+38,Never,Retail/Service,Siem Reap,Silver,3,true,true,false
+40,Never,Manual Labor,Battambang,Bronze,2,false,false,false
+40,Never,Manual Labor,Battambang,Silver,2,true,false,false
+40,Never,Manual Labor,Battambang,Gold,2,true,true,false
+42,Former,Manual Labor,Siem Reap,Gold,3,true,true,false
+45,Never,Office/Desk,Phnom Penh,Gold,2,true,true,false
+45,Current,Manual Labor,Rural Areas,Bronze,1,false,false,false
+48,Former,Healthcare,Phnom Penh,Gold,1,true,false,false
+50,Never,Office/Desk,Phnom Penh,Gold,4,true,true,false
+50,Never,Retired,Kampong Cham,Silver,2,true,false,false
+52,Current,Industrial/High-Risk,Battambang,Bronze,1,false,false,false
+55,Never,Retired,Phnom Penh,Gold,2,true,true,false
+55,Current,Retired,Kampong Cham,Platinum,2,true,true,true
+58,Former,Retired,Siem Reap,Silver,1,true,false,false
+60,Never,Retired,Phnom Penh,Platinum,3,true,true,false
+60,Current,Industrial/High-Risk,Rural Areas,Bronze,1,false,false,false
+31,Never,Healthcare,Sihanoukville,Silver,1,true,false,true
+29,Never,Office/Desk,Phnom Penh,Gold,1,true,true,false
+36,Former,Retail/Service,Phnom Penh,Silver,2,true,false,false
+44,Never,Healthcare,Phnom Penh,Gold,1,true,true,false
+27,Never,Office/Desk,Siem Reap,Bronze,1,false,false,false
+33,Never,Manual Labor,Sihanoukville,Silver,1,true,false,false
+47,Current,Retail/Service,Rural Areas,Bronze,2,false,false,false

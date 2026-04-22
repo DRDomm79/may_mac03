@@ -1,0 +1,290 @@
+.case-history-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.history-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.history-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.history-header p {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+}
+
+.case-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.stat {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 2rem;
+  color: #f5c563;
+  margin-bottom: 0.5rem;
+}
+
+.stat span {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.cases-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.cases-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cases-table thead {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.cases-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #1a1a2e;
+  font-size: 0.95rem;
+}
+
+.cases-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 0.95rem;
+}
+
+.cases-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.case-id {
+  font-weight: 600;
+  color: #6c757d;
+  font-family: monospace;
+}
+
+.applicant-name {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.health-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.health-badge.excellent {
+  background: #d4edda;
+  color: #155724;
+}
+
+.health-badge.good {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.health-badge.fair {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.health-badge.poor {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.decision-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.btn-expand {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e9ecef;
+  background: white;
+  color: #1a1a2e;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-expand:hover {
+  background: #f8f9fa;
+  border-color: #f5c563;
+  color: #f5c563;
+}
+
+.export-section,
+.bulk-actions {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.export-section h3,
+.bulk-actions h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.export-buttons,
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-export {
+  background: #17a2b8;
+  color: white;
+}
+
+.btn-export:hover {
+  background: #138496;
+}
+
+.btn-action {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-action:hover {
+  background: #5a6268;
+}
+
+.empty-state {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.empty-state h3 {
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .cases-table {
+    font-size: 0.9rem;
+  }
+
+  .cases-table th,
+  .cases-table td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cases-table-wrapper {
+    overflow-x: scroll;
+  }
+
+  .cases-table {
+    min-width: 900px;
+  }
+
+  .case-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .export-buttons,
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .export-section,
+  .bulk-actions {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .history-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .case-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .stat {
+    padding: 1rem;
+  }
+
+  .stat strong {
+    font-size: 1.5rem;
+  }
+
+  .cases-table {
+    min-width: 800px;
+    font-size: 0.85rem;
+  }
+
+  .cases-table th,
+  .cases-table td {
+    padding: 0.5rem;
+  }
+}
