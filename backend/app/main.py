@@ -36,7 +36,8 @@ ALLOWED_ORIGINS=os.getenv("ALLOWED_ORIGINS","*").split(",")
 ADMIN_KEY=os.getenv("ADMIN_API_KEY","")
 CF_SECRET=os.getenv("CF_SECRET_TOKEN","")  # Cloudflare secret header — set in Render dashboard
 MAX_BODY=int(os.getenv("MAX_BODY_BYTES","65536"))  # 64KB default
-GROQ_API_KEY=os.getenv("GROQ_API_KEY","")  # For AI Lab — from console.groq.com
+GROQ_API_KEY=os.getenv("GROQ_API_KEY","")  # Legacy — kept for fallback
+ANTHROPIC_API_KEY=os.getenv("ANTHROPIC_API_KEY","")  # For AI Lab — from console.anthropic.com
 db_pool=None; models={}; model_version="v1.0.0"
 
 # Rate limiter
@@ -434,8 +435,9 @@ async def ailab_upload(file: UploadFile = File(...)):
 
 @app.post("/api/v2/ailab/analyze")
 async def ailab_analyze(request: Request):
-    if not GROQ_API_KEY:
-        raise HTTPException(503, "AI not configured — set GROQ_API_KEY env var on Render")
+    ai_key = ANTHROPIC_API_KEY or GROQ_API_KEY
+    if not ai_key:
+        raise HTTPException(503, "AI not configured — set ANTHROPIC_API_KEY env var on Render")
     import httpx
     body = await request.json()
     user_message = body.get("message", "")
@@ -445,27 +447,63 @@ async def ailab_analyze(request: Request):
     if filename and filename in _ailab_files:
         m = _ailab_files[filename]
         data_context = f"\n\nUploaded file: {filename}\nRows: {m.get('rows', '?')}\nColumns: {m.get('columns', [])}\nData types: {m.get('dtypes', {})}\nMissing values: {m.get('missing', {})}\nNumeric summary: {json.dumps(m.get('numeric_summary', {}), indent=2)}"
-    openai_msgs = [{"role": "system", "content": AILAB_SYSTEM_PROMPT + data_context}]
-    for msg in history[-20:]:
-        openai_msgs.append({"role": msg["role"], "content": msg["content"]})
-    openai_msgs.append({"role": "user", "content": user_message})
-    try:
-        async with httpx.AsyncClient(timeout=45) as client:
-            r = await client.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
-                json={"model": "llama-3.3-70b-versatile", "messages": openai_msgs, "max_tokens": 2000, "temperature": 0.1},
-            )
-        data = r.json()
-        if "error" in data:
-            raise HTTPException(502, f"AI error: {data['error'].get('message', 'Unknown')}")
-        ai_response = data["choices"][0]["message"]["content"]
-        return {"response": ai_response, "has_code": "```python" in ai_response}
-    except httpx.TimeoutException:
-        raise HTTPException(504, "AI response timed out")
-    except HTTPException: raise
-    except Exception as e:
-        log.error(f"AI Lab error: {e}"); raise HTTPException(500, "AI analysis failed")
+    system_prompt = AILAB_SYSTEM_PROMPT + data_context
+
+    if ANTHROPIC_API_KEY:
+        # ── Claude API ──
+        messages = []
+        for msg in history[-20:]:
+            messages.append({"role": msg["role"], "content": msg["content"]})
+        messages.append({"role": "user", "content": user_message})
+        try:
+            async with httpx.AsyncClient(timeout=60) as client:
+                r = await client.post(
+                    "https://api.anthropic.com/v1/messages",
+                    headers={
+                        "x-api-key": ANTHROPIC_API_KEY,
+                        "anthropic-version": "2023-06-01",
+                        "content-type": "application/json",
+                    },
+                    json={
+                        "model": "claude-sonnet-4-20250514",
+                        "max_tokens": 4096,
+                        "system": system_prompt,
+                        "messages": messages,
+                    },
+                )
+            data = r.json()
+            if "error" in data:
+                raise HTTPException(502, f"AI error: {data['error'].get('message', 'Unknown')}")
+            ai_response = data["content"][0]["text"]
+            return {"response": ai_response, "has_code": "```python" in ai_response}
+        except httpx.TimeoutException:
+            raise HTTPException(504, "AI response timed out")
+        except HTTPException: raise
+        except Exception as e:
+            log.error(f"AI Lab Claude error: {e}"); raise HTTPException(500, "AI analysis failed")
+    else:
+        # ── Groq fallback ──
+        openai_msgs = [{"role": "system", "content": system_prompt}]
+        for msg in history[-20:]:
+            openai_msgs.append({"role": msg["role"], "content": msg["content"]})
+        openai_msgs.append({"role": "user", "content": user_message})
+        try:
+            async with httpx.AsyncClient(timeout=45) as client:
+                r = await client.post(
+                    "https://api.groq.com/openai/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"},
+                    json={"model": "llama-3.3-70b-versatile", "messages": openai_msgs, "max_tokens": 2000, "temperature": 0.1},
+                )
+            data = r.json()
+            if "error" in data:
+                raise HTTPException(502, f"AI error: {data['error'].get('message', 'Unknown')}")
+            ai_response = data["choices"][0]["message"]["content"]
+            return {"response": ai_response, "has_code": "```python" in ai_response}
+        except httpx.TimeoutException:
+            raise HTTPException(504, "AI response timed out")
+        except HTTPException: raise
+        except Exception as e:
+            log.error(f"AI Lab Groq error: {e}"); raise HTTPException(500, "AI analysis failed")
 
 @app.post("/api/v2/ailab/execute")
 async def ailab_execute(request: Request):
