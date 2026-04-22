@@ -4,7 +4,7 @@ Fixes: auth, rate limiting, cross-country region validation, input sanitization,
 deterministic encoding, champion/challenger, severity clamping, premium bounds,
 batch inserts, request ID correlation, error handling.
 """
-import os, re, time, uuid, logging, json
+import os, re, time, uuid, logging, json, hashlib, secrets
 from datetime import datetime, timezone
 from contextlib import asynccontextmanager
 from typing import Optional, List
@@ -93,7 +93,8 @@ async def mw(request:Request,call_next):
     ip=request.client.host if request.client else "x"
     # Block direct access — only allow requests that came through Cloudflare (skip for AI Lab + health)
     is_ailab = request.url.path.startswith("/api/v2/ailab/")
-    if CF_SECRET and not is_ailab and request.url.path != "/health" and request.headers.get("X-CF-Secret")!=CF_SECRET:
+    is_auth = request.url.path == "/auth/login"
+    if CF_SECRET and not is_ailab and not is_auth and request.url.path != "/health" and request.headers.get("X-CF-Secret")!=CF_SECRET:
         return JSONResponse(status_code=403,content={"detail":"Direct API access not permitted. Use the official frontend."})
     # Rate limit
     if not _rl(ip): return JSONResponse(429,{"detail":"Rate limit exceeded"})
@@ -111,6 +112,25 @@ async def mw(request:Request,call_next):
     r.headers["Referrer-Policy"]="strict-origin-when-cross-origin"
     r.headers["X-Permitted-Cross-Domain-Policies"]="none"
     return r
+
+# ── Staff auth ──────────────────────────────────────────────
+STAFF_USERS = {
+    "admin":  {"hash": hashlib.sha256("dac2026".encode()).hexdigest(), "role": "admin"},
+    "actuary": {"hash": hashlib.sha256("dac2026".encode()).hexdigest(), "role": "actuary"},
+    "rotha":  {"hash": hashlib.sha256("rotha123".encode()).hexdigest(), "role": "admin"},
+    "poly":   {"hash": hashlib.sha256("poly123".encode()).hexdigest(), "role": "actuary"},
+}
+
+@app.post("/auth/login")
+async def staff_login(request: Request):
+    body = await request.json()
+    u = body.get("username", "").strip().lower()
+    p = body.get("password", "")
+    staff = STAFF_USERS.get(u)
+    if not staff or hashlib.sha256(p.encode()).hexdigest() != staff["hash"]:
+        raise HTTPException(401, "Invalid username or password")
+    token = secrets.token_urlsafe(32)
+    return {"access_token": token, "role": staff["role"], "username": u}
 
 class PricingRequest(BaseModel):
     age:int=Field(...,ge=0,le=100); gender:str=Field(...); country:str=Field("cambodia"); region:str=Field(...)

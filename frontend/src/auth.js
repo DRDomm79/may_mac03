@@ -1,4 +1,4 @@
-export const API_URL = "https://dac-healthprice-api.onrender.com";
+export const API_URL = "https://dac-healthprice-api-49dr.onrender.com";
 
 export const getToken  = () => sessionStorage.getItem("dac_token");
 export const getRole   = () => sessionStorage.getItem("dac_role");
