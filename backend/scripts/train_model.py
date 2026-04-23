@@ -175,18 +175,27 @@ def train():
     print("DAC HealthPrice — Frequency-Severity Model Training")
     print("=" * 60)
 
-    # Train models for each coverage type
-    for i, cov in enumerate(["ipd", "opd", "dental", "maternity"]):
-        train_freq_sev_model(cov, SEED + i)
+    # IPD models are pre-trained from real Kaggle data (notebook pipeline)
+    # Only train OPD, Dental, Maternity from synthetic data
+    ipd_freq_path = os.path.join(OUTPUT_DIR, "ipd_freq.pkl")
+    ipd_sev_path = os.path.join(OUTPUT_DIR, "ipd_sev.pkl")
+    if os.path.exists(ipd_freq_path) and os.path.exists(ipd_sev_path):
+        print("\n  IPD models already exist (from notebook pipeline) — skipping")
+    else:
+        train_freq_sev_model("ipd", SEED)
+
+    for i, cov in enumerate(["opd", "dental", "maternity"]):
+        train_freq_sev_model(cov, SEED + i + 1)
 
     # Create a combined metadata file
     meta = {
-        "version": "v1.0.0",
+        "version": "v2.0.0",
         "coverage_types": ["ipd", "opd", "dental", "maternity"],
         "features": ["age", "gender", "smoking", "exercise", "occupation", "region", "preexist_conditions"],
+        "ipd_source": "Kaggle real data (insurance + cross-sell datasets)",
+        "other_source": "Synthetic data (OPD, Dental, Maternity)",
         "frequency_model": "PoissonRegressor",
         "severity_model": "GradientBoostingRegressor",
-        "training_samples": N_SAMPLES,
     }
     joblib.dump(meta, os.path.join(OUTPUT_DIR, "model_meta.pkl"))
     print(f"\nAll models trained and saved to {OUTPUT_DIR}/")

@@ -3,8 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 .env
-*.pkl
-models/
+# Keep backend/models/*.pkl committed (pre-trained IPD models from notebook)
 venv/
 .venv/
 
